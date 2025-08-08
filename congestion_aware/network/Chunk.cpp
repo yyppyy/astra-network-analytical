@@ -22,6 +22,7 @@ void Chunk::chunk_arrived_next_device(void* const chunk_ptr) noexcept {
     if (chunk->arrived_dest()) {
         // chunk arrived dest, invoke callback
         // as chunk is unique_ptr, will be destroyed automatically
+        // printf("chunk::invoke_callback\n");
         chunk->invoke_callback();
     } else {
         // send this chunk to next dest
@@ -64,7 +65,10 @@ void Chunk::mark_arrived_next_device() noexcept {
 
     // pop previous node from the route
     // marking the current node has been changed
+    // int reached = route.front()->get_id();
+    // int dst = route.back()->get_id();
     route.pop_front();
+    // printf("chunk reached %d, dst %d, route len %d\n", reached, dst, route.size());
 }
 
 bool Chunk::arrived_dest() const noexcept {
